@@ -7,8 +7,8 @@ For start searching file use the following command:
 find [<name>] [<type>] [<optional>]
 ```
 in the 'type' field insert:  
-    -f    to find a file  
-    -d    to find a directory
+&emsp;-f    to find a file  
+&emsp;-d    to find a directory
 
 in the 'optional' field you can put the name of single drive
 
