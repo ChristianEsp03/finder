@@ -1,5 +1,5 @@
 # Find
-A file search tools written in Go. 
+A file search tool written in Go. 
 
 ## Usage
 For start searching file use the following command:
