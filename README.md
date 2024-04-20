@@ -4,7 +4,11 @@ A file search tool written in Go.
 ## Usage
 For start searching file use the following command:
 ```bash
-find [<name>] [-f | -d]
+find [<name>] [<type>] [<optional>]
 ```
-The value -f (file) and -d (directory) is for specify the element type you want find
+in the 'type' field insert:  
+    -f    to find a file  
+    -d    to find a directory
+
+in the 'optional' field you can put the name of single drive
 

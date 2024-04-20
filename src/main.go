@@ -29,6 +29,19 @@ func getdrives() (r []string) {
 	return
 }
 
+func usage() {
+	fmt.Print(
+`usage: find [<name>] [<type>] [<optional>]
+
+in the 'type' field insert:
+  -f	to find a file
+  -d	to find a directory
+
+in the 'optional' field you can put the name of single drive
+
+`)
+}
+
 func findFile(elem string, items []fs.DirEntry, path string) {
 	for _, obj := range items {
 		fullpath := filepath.Join(path, obj.Name())
@@ -38,13 +51,13 @@ func findFile(elem string, items []fs.DirEntry, path string) {
 				fmt.Println(fullpath)
 			}
 		} else {
-				newItems, err := os.ReadDir(fullpath)
-				
-				if err != nil {
-					continue
-				}
-				
-				findFile(elem, newItems, fullpath)			
+			newItems, err := os.ReadDir(fullpath)
+			
+			if err != nil {
+				continue
+			}
+			
+			findFile(elem, newItems, fullpath)			
 		}
 	}
 }
@@ -72,17 +85,33 @@ func findDir(elem string, items []fs.DirEntry, path string) {
 func main() {
 	start := time.Now()
 	drives := getdrives()
+
+	if len(os.Args) == 1 {
+		usage()
+		os.Exit(1)
+	}
+
 	elem, elem_type := os.Args[1], os.Args[2]
-	
 	fmt.Println("Ricerca...")
 
 	switch elem_type {
 		case "-f":
-			for _, drive := range drives {
-				items, err := os.ReadDir(drive)
-				funcErr(err)
-				findFile(elem, items, drive)
+			if len(os.Args) < 4 {
+				for _, drive := range drives {
+					items, err := os.ReadDir(drive)
+					funcErr(err)
+					findFile(elem, items, drive)
+				}
+			} else {
+				for _, drive := range drives {
+					if strings.EqualFold(os.Args[3], drive) {
+						items, err := os.ReadDir(drive)
+						funcErr(err)
+						findFile(elem, items, drive)
+					}
+				}
 			}
+			
 		case "-d":
 			if len(os.Args) < 4 {
 				for _, drive := range drives {
@@ -101,11 +130,10 @@ func main() {
 			}
 			
 		default:
-			fmt.Println("The element type isn't correct") // Modificare la stringa
+			usage()
 	}
-
+	
 	finish := time.Since(start)
-
 	fmt.Println(finish)
 }
 
