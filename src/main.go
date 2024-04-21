@@ -6,7 +6,6 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-	"time"
 )
 
 func funcErr(err error) {
@@ -83,7 +82,7 @@ func findDir(elem string, items []fs.DirEntry, path string) {
 }
 
 func main() {
-	start := time.Now()
+	// start := time.Now()
 	drives := getdrives()
 
 	if len(os.Args) == 1 {
@@ -133,7 +132,7 @@ func main() {
 			usage()
 	}
 	
-	finish := time.Since(start)
-	fmt.Println(finish)
+	// finish := time.Since(start)
+	// fmt.Println(finish)
 }
 
